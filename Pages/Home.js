@@ -17,9 +17,12 @@ const Home = () => {
     }) 
   }
 
-  useEffect(() => {
-    getData()
-  },);
+useEffect(() => {
+  getData()
+  return () => {
+    
+  };
+}, []);
 
   const RenderItem=(item)=>{
     return(

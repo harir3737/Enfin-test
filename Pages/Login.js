@@ -16,64 +16,61 @@ import { change_user } from '../redux/userSlice';
 
 const Login = ({navigation}) => {
 
-const Data={"email":"hari","password":"qwerty"}
+const data = {"email":"admin","password":"qwerty"}
 
-const [emailstatus,setEmailstatus]=useState("")
-const[passwordstatus,setPasswordstatus]=useState("")
-const[wrongemailtext,setWrongemailtext]=useState("")
-const[wrongPasswordtext,setWrongpasswordtext]=useState('')
+const [emailstatus,setEmailStatus] = useState("")
 
-const[allow,setAllow]=useState("")
+const [passwordstatus,setPasswordStatus] = useState("")
 
-const[email,setEmail]=useState("")
-const[password,setPassword]=useState("")
+const [wrongemailtext,setWrongEmailText] = useState("")
+
+const [wrongpasswordtext,setWrongPasswordText] = useState('')
+ 
+const [email,setEmail] = useState("")
+
+const [password,setPassword] = useState("")
 
 const checkDetails=()=>{
-  if(Data["email"]!=email)
+  if(data["email"]!=email && data["password"]!=password)
   {
-    if(email.length==0){
-      setWrongemailtext('')
+    if(email.length==0 && password.length==0){
+      setWrongEmailText('')
+      setWrongPasswordText(" ")
     }
     else{
-    setWrongemailtext("email is invalid")
+    setWrongEmailText("email is invalid")
+    setWrongPasswordText("password is incorrect")
     }
   }
-
-  if(Data["password"]!=password)
-  {
-    if(password.length==0){
-      setWrongpasswordtext('')
-    }
-    else{
-    setWrongpasswordtext("password is incorrect")
-    }
-  }
-  else{
-    setWrongpasswordtext('')
+  else if(data["email"]==email && data["password"]==password){
+    setWrongEmailText('')
+    setWrongPasswordText('')
+    navigation.navigate('home')
   }
   
 }
 
 
-
-
-const EmptyValidator=()=>{
+const emailEmptyValidator=()=>{
   if(!email.trim())
   {
-    setEmailstatus("email feild can not be empty")
+    setEmailStatus("email feild can not be empty")
   }
   else{
-    setEmailstatus("")
+    setEmailStatus("")
   }
+}
+
+const passwordEmptyValidator = () =>{
   if(!password.trim())
   {
-    setPasswordstatus("password feild can not be empty")
+    setPasswordStatus("password feild can not be empty")
   }
   else{
-    setPasswordstatus("")
+    setPasswordStatus("")
   }
-  
 }
+
 
 
   return (
@@ -85,20 +82,20 @@ const EmptyValidator=()=>{
 
         <Text style={styles.email}>Email</Text>
 
-        <TextInput style={styles.txtip} onChangeText={(Text)=>setEmail(Text)} onBlur={()=>EmptyValidator()}/>
+        <TextInput style={styles.txtip} onChangeText={(Text)=>{setEmail(Text);emailEmptyValidator()}} onBlur={()=>emailEmptyValidator()}/>
         <Text style={{color:"red",bottom:"7%",right:"18%"}}>{emailstatus}</Text>
         <Text style={{color:"red",bottom:"10%",right:"29%"}}>{wrongemailtext}</Text>
 
 
         <Text style={styles.password}>Password</Text>
 
-        <TextInput style={styles.txtip2} onChangeText={(Text)=>setPassword(Text)} onBlur={()=>EmptyValidator()}/>
+        <TextInput style={styles.txtip2} onChangeText={(Text)=>{setPassword(Text);passwordEmptyValidator()}} onBlur={()=>passwordEmptyValidator()}/>
         <Text style={{color:"red",bottom:"5%",right:"15%"}}>{passwordstatus}</Text>
-        <Text style={{color:"red",bottom:"5%",right:"15%"}}>{wrongPasswordtext}</Text>
+        <Text style={{color:"red",bottom:"7%",right:"23%"}}>{wrongpasswordtext}</Text>
 
 
 
-        <TouchableHighlight style={styles.touch} onPress={()=>{EmptyValidator();checkDetails();}}>
+        <TouchableHighlight style={styles.touch} onPress={()=>{emailEmptyValidator();checkDetails();passwordEmptyValidator()}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Login</Text>
         </TouchableHighlight>
 
