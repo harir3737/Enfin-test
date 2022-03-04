@@ -12,11 +12,12 @@ import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/Key
 
 import { useSelector,useDispatch } from 'react-redux'
 import { change_user } from '../redux/userSlice';
+import InputFeild from '../component/InputFeild';
 
 
 const Login = ({navigation}) => {
 
-const data = {"email":"admin","password":"qwerty"}
+const data = {"email":"admin","password":"1234"}
 
 const [emailstatus,setEmailStatus] = useState("")
 
@@ -41,6 +42,7 @@ const checkDetails=()=>{
     setWrongEmailText("email is invalid")
     setWrongPasswordText("password is incorrect")
     }
+
   }
   else if(data["email"]==email && data["password"]==password){
     setWrongEmailText('')
@@ -71,6 +73,9 @@ const passwordEmptyValidator = () =>{
   }
 }
 
+console.log(email)
+console.log(password)
+
 
 
   return (
@@ -80,22 +85,21 @@ const passwordEmptyValidator = () =>{
         <Text style={styles.welcometxt}>Welcome Back,</Text>
         <Text style={styles.signintocontinue}>Sign into continue</Text>
 
-        <Text style={styles.email}>Email</Text>
-
-        <TextInput style={styles.txtip} onChangeText={(Text)=>{setEmail(Text);emailEmptyValidator()}} onBlur={()=>emailEmptyValidator()}/>
+        <InputFeild text={"Email"} onChangeText={(Text)=>{setEmail(Text);emailEmptyValidator()}} onBlur={()=>emailEmptyValidator()}/>
+        
         <Text style={{color:"red",bottom:"7%",right:"18%"}}>{emailstatus}</Text>
         <Text style={{color:"red",bottom:"10%",right:"29%"}}>{wrongemailtext}</Text>
 
 
-        <Text style={styles.password}>Password</Text>
 
-        <TextInput style={styles.txtip2} onChangeText={(Text)=>{setPassword(Text);passwordEmptyValidator()}} onBlur={()=>passwordEmptyValidator()}/>
+        <InputFeild text={"Password"} style={styles.txtip2} onChangeText={(Text)=>{setPassword(Text);passwordEmptyValidator()}} onBlur={()=>passwordEmptyValidator()}/>
+        
         <Text style={{color:"red",bottom:"5%",right:"15%"}}>{passwordstatus}</Text>
         <Text style={{color:"red",bottom:"7%",right:"23%"}}>{wrongpasswordtext}</Text>
 
 
 
-        <TouchableHighlight style={styles.touch} onPress={()=>{emailEmptyValidator();checkDetails();passwordEmptyValidator()}}>
+        <TouchableHighlight style={styles.touch} onPress={()=>{emailEmptyValidator();checkDetails();passwordEmptyValidator();}}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>Login</Text>
         </TouchableHighlight>
 
@@ -125,26 +129,7 @@ const styles = StyleSheet.create({
     marginRight: '70%',
     marginTop: '15%',
   },
-  txtip: {
-    width: '80%',
-    borderBottomColor: '#abb0b8',
-    borderBottomWidth: 0.9,
-    marginBottom: '15%',
-  },
-  txtip2: {
-    width: '80%',
-    borderBottomColor: '#abb0b8',
-    borderBottomWidth: 0.9,
-    marginBottom: '10%',
-  },
-  email: {
-    marginRight: '70%',
-    fontWeight: 'bold',
-  },
-  password: {
-    marginRight: '64%',
-    fontWeight: 'bold',
-  },
+  
   welcometxt: {
     fontSize: 28,
     fontWeight: '400',
